@@ -1,4 +1,4 @@
-package com.expertzlab;
+package com.expertzlab.invertIndex;
 
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
