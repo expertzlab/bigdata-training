@@ -1,4 +1,4 @@
-package com.expertzlab.xmlparse;
+package com.expertzlab.xml;
 
 /**
  * Created by gireeshbabu on 11/05/17.
