@@ -1,6 +1,5 @@
 package com.expertzlab.xml;
 
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -69,6 +68,7 @@ public final class XmlReduceWriter extends Configured implements Tool {
    * @throws Exception if something goes wrong
    */
   public int run(final String[] args) throws Exception {
+
 
     Path inputPath = new Path(args[0]);
     Path outputPath = new Path(args[1]);

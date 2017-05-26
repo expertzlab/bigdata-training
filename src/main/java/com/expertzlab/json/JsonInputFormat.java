@@ -1,7 +1,9 @@
 package com.expertzlab.json;
 
 import com.expertzlab.util.HadoopCompat;
-import jdk.nashorn.internal.parser.JSONParser;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.MapWritable;
@@ -50,11 +52,12 @@ public class JsonInputFormat
         LoggerFactory.getLogger(JsonRecordReader
             .class);
 
+    private static final JsonFactory jsonFactory = new JsonFactory();
+
     private LineRecordReader reader = new LineRecordReader();
 
     private final Text currentLine_ = new Text();
     private final MapWritable value_ = new MapWritable();
-    //private final JSONParser jsonParser_ = new JSONParser();
 
     @Override
     public void initialize(InputSplit split,
@@ -91,46 +94,33 @@ public class JsonInputFormat
         throws IOException, InterruptedException {
       while (reader.nextKeyValue()) {
         value_.clear();
-        /*
-        if (decodeLineToJson(jsonParser_, reader.getCurrentValue(),
+        if (decodeLineToJson(reader.getCurrentValue(),
             value_)) {
           return true;
         }
-        */
       }
       return false;
     }
 
-    public static void decodeLineToJson(JSONParser parser,
-                                           Text line,
-                                           MapWritable value) {
+    public static boolean decodeLineToJson(Text line,
+                                           MapWritable value) throws IOException {
       log.info("Got string '{}'", line);
-
-      /*
+      JsonParser parser = jsonFactory.createParser(line.toString());
       try {
-        JSONObject jsonObj =
-            (JSONObject) parser.parse(line.toString());
-
-        for (Object key : jsonObj.keySet()) {
-          Text mapKey = new Text(key.toString());
+        while (parser.nextToken() != JsonToken.END_OBJECT) {
+          Text mapKey = new Text(parser.nextFieldName());
           Text mapValue = new Text();
-          if (jsonObj.get(key) != null) {
-            mapValue.set(jsonObj.get(key).toString());
+          String tvalue = parser.nextTextValue();
+          if ( tvalue != null) {
+            mapValue.set(tvalue);
           }
-
           value.put(mapKey, mapValue);
         }
         return true;
-      } catch (ParseException e) {
-        LOG.warn("Could not json-decode string: " + line, e);
-        return false;
-      } catch (NumberFormatException e) {
-        LOG.warn("Could not parse field into number: " + line, e);
-        return false;
+      }catch (IOException ioe){
+          LOG.warn("Could not json-decode string: " + line, ioe);
+          return false;
       }
-      */
-
     }
-
   }
 }
