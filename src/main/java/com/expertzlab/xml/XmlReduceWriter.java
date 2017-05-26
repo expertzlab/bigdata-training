@@ -34,6 +34,7 @@ public final class XmlReduceWriter extends Configured implements Tool {
     }
 
     private Text outputKey = new Text();
+
     public void reduce(Text key, Iterable<Text> values,
                        Context context)
         throws IOException, InterruptedException {
@@ -45,7 +46,7 @@ public final class XmlReduceWriter extends Configured implements Tool {
 
     public static String constructPropertyXml(Text name, Text value) {
       return String.format(
-          "<property><name>%s</name><value>%s</value></property>",          name, value);
+          "<property><name>%s</name><value>%s</value></property>", name, value);
     }
   }
 

@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public final class JsonReduce extends Configured implements Tool {
+public final class JsonMap extends Configured implements Tool {
   private static final Logger log = LoggerFactory.getLogger
-      (JsonReduce.class);
+      (JsonMap.class);
 
   public static class Map extends Mapper<LongWritable, MapWritable,
       Text, Text> {
@@ -46,7 +46,7 @@ public final class JsonReduce extends Configured implements Tool {
    * @throws Exception when something goes wrong
    */
   public static void main(final String[] args) throws Exception {
-    int res = ToolRunner.run(new Configuration(), new JsonReduce(), args);
+    int res = ToolRunner.run(new Configuration(), new JsonMap(), args);
     System.exit(res);
   }
 
@@ -64,7 +64,7 @@ public final class JsonReduce extends Configured implements Tool {
 
     Configuration conf = super.getConf();
     Job job = new Job(conf);
-    job.setJarByClass(JsonReduce.class);
+    job.setJarByClass(JsonMap.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(Text.class);
     job.setMapperClass(Map.class);
