@@ -34,6 +34,8 @@ public class TopPhrases {
         job.setReducerClass(TPReduce.class);
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(IntWritable.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
         FileInputFormat.setInputPaths(job,inp);
         FileOutputFormat.setOutputPath(job,outp);
 
