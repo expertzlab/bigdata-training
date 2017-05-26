@@ -1,4 +1,4 @@
-package com.expertzlab.xmlparse;
+package com.expertzlab.xml;
 
 
 import org.apache.hadoop.conf.Configuration;
