@@ -11,7 +11,6 @@ import java.util.Map;
 
 public class WavgMap extends Mapper<LongWritable, Text, Text,Text> {
 
-    private Text documentId;
     private Text rkey = new Text();
     private Text rValue = new Text();
 
@@ -19,9 +18,10 @@ public class WavgMap extends Mapper<LongWritable, Text, Text,Text> {
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-        String[] array = StringUtils.split(value.toString());
+        String[] array = StringUtils.split(value.toString(),'\t');
+        System.out.println("Word="+array[0]+", count="+array[1]);
         rkey.set("average");
-        rValue.set(array[0]+":"+array[1]);
+        rValue.set(array[0].trim()+":"+array[1].trim());
         context.write(rkey, rValue);
     }
 }

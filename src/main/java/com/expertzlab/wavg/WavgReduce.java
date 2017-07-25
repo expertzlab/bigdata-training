@@ -18,17 +18,19 @@ public class WavgReduce extends Reducer<Text, Text, Text, Text> {
     public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
         System.out.println("key:"+key+", values:"+values);
 
-        int totalcount = 0;
-        int average = 0;
+        float totalcount = 0;
+        float average = 0;
         for(Text val: values){
             String[] array = StringUtils.split(val.toString(),":");
             map.put(array[0],array[1]);
             totalcount += Integer.parseInt(array[1]);
         }
 
-        for(Map.Entry e: map.entrySet()){
+        System.out.println("Total count="+totalcount);
 
+        for(Map.Entry e: map.entrySet()){
             average = (Integer.parseInt((String)e.getValue())/totalcount)*100;
+            System.out.printf("Caculated percentage for %s - %f ",e.getKey(),average);
             context.write(new Text((String)e.getKey()),new Text(""+average));
         }
 

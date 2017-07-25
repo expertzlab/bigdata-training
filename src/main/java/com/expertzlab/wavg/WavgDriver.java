@@ -29,6 +29,7 @@ public class WavgDriver {
 
         Configuration conf = new Configuration();
 
+
         Job job1 = new Job(conf);
         job1.setJarByClass(WavgDriver.class);
         job1.setMapperClass(WcMap.class);
@@ -54,9 +55,6 @@ public class WavgDriver {
         if(job2.waitForCompletion(true)){
             System.out.println("Job 2 Completed Successfully");
         }
-
-
-
-
+        
     }
 }
