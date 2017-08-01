@@ -4,6 +4,7 @@ import com.expertzlab.util.HadoopCompat;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import org.apache.avro.data.Json;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.MapWritable;
@@ -53,8 +54,6 @@ public class JsonInputFormat
     private static final JsonFactory jsonFactory = new JsonFactory();
 
     private LineRecordReader reader = new LineRecordReader();
-
-    private final Text currentLine_ = new Text();
     private final MapWritable value_ = new MapWritable();
 
     @Override
@@ -103,19 +102,36 @@ public class JsonInputFormat
     public static boolean decodeLineToJson(Text line,
                                            MapWritable value) throws IOException {
       log.info("Got string '{}'", line);
-      JsonParser parser = jsonFactory.createParser(line.toString());
+      String strLine = line.toString();
+      if(line.getLength() < 10) {
+        return true;
+      }
+
+      int length = strLine.length();
+      int commpos = strLine.lastIndexOf(',');
+      int curlypos = strLine.lastIndexOf('}');
+      if(commpos>curlypos) {
+        strLine = strLine.substring(0, commpos);
+      }
+      System.out.println("After comma cut -"+strLine);
+      JsonParser parser = jsonFactory.createParser(strLine);
+      JsonToken type = parser.nextToken(); //Start array
+
       try {
-        while (parser.nextToken() != JsonToken.END_OBJECT) {
-          while (parser.nextValue() == null) ;
-          String key = null;
-          while(( key = parser.nextFieldName()) == null);
-          Text mapKey = new Text(key);
-          Text mapValue = new Text();
-          String tvalue = parser.nextTextValue();
-          if ( tvalue != null) {
-            mapValue.set(tvalue);
+        type = parser.nextToken();
+        while( type != null) {
+          while (type == JsonToken.FIELD_NAME) {
+            String fieldName = parser.getCurrentName();
+            parser.nextToken();
+            String fieldValue = parser.getText();
+            Text mapKey = new Text(fieldName);
+            Text mapValue = new Text(fieldValue);
+            value.put(mapKey, mapValue);
+            type= parser.nextToken();
           }
-          value.put(mapKey, mapValue);
+          //parser.nextToken();//end of object
+          type = parser.nextToken(); //start of object
+          type = parser.nextToken(); //Filed Name
         }
         return true;
       }catch (IOException ioe){

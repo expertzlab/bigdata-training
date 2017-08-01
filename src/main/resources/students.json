@@ -1,2 +1,6 @@
-    [{"name": "ajai","age": "23", "address": "34", "pin": "68382"},
-    {"name": "Ram", "age": "33", "address": "Palarivattam", "pin": "682333"}]
+    [
+    {"name": "ajai","age": "23", "address": "34", "pin": "68382"},
+    {"name": "Ram", "age": "33", "address": "Palarivattam", "pin": "682333"},
+    {"name": "Ram1", "age": "33", "address": "Palarivattam", "pin": "682335"},
+    {"name": "Ram2", "age": "34", "address": "Thammanam", "pin": "682334"}
+    ]
