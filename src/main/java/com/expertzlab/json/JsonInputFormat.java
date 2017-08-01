@@ -32,9 +32,7 @@ public class JsonInputFormat
 
   @Override
   public RecordReader<LongWritable, MapWritable> createRecordReader(
-      InputSplit split,
-      TaskAttemptContext
-          context) {
+      InputSplit split, TaskAttemptContext context) {
     return new JsonRecordReader();
   }
 
@@ -108,7 +106,10 @@ public class JsonInputFormat
       JsonParser parser = jsonFactory.createParser(line.toString());
       try {
         while (parser.nextToken() != JsonToken.END_OBJECT) {
-          Text mapKey = new Text(parser.nextFieldName());
+          while (parser.nextValue() == null) ;
+          String key = null;
+          while(( key = parser.nextFieldName()) == null);
+          Text mapKey = new Text(key);
           Text mapValue = new Text();
           String tvalue = parser.nextTextValue();
           if ( tvalue != null) {

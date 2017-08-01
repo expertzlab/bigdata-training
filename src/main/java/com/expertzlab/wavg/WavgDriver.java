@@ -55,6 +55,6 @@ public class WavgDriver {
         if(job2.waitForCompletion(true)){
             System.out.println("Job 2 Completed Successfully");
         }
-        
+
     }
 }

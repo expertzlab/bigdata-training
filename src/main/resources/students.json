@@ -1,10 +1,2 @@
-
-{
-  "student": {
-    "name": "ajai",
-    "age": 23,
-    "address": "34",
-    "pin": []
-  }
-}
-
+    [{"name": "ajai","age": "23", "address": "34", "pin": "68382"},
+    {"name": "Ram", "age": "33", "address": "Palarivattam", "pin": "682333"}]
