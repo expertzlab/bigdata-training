@@ -14,7 +14,7 @@ import javax.xml.stream.XMLStreamConstants;
 /**
  * Created by admin on 05/04/18.
  */
-public class DomParser {
+public class StaxParser {
 
     public static void main(String[] args) throws FileNotFoundException, XMLStreamException {
 
