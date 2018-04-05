@@ -10,15 +10,14 @@ import java.io.IOException;
 
 public class WcMap extends Mapper<LongWritable, Text, Text,Text> {
 
-    private Text documentId;
     private Text word = new Text();
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         for(String token: StringUtils.split(value.toString(),' ')){
-            word.set(token);
+            word.set(token.trim());
             context.write(word, new Text("1"));
-            System.out.println("word:"+word.toString()+", docid:"+documentId);
+            System.out.println("word:"+word.toString());
         }
     }
 }

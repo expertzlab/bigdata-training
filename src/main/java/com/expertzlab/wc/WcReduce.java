@@ -11,13 +11,16 @@ import java.util.HashSet;
  */
 public class WcReduce extends Reducer<Text, Text, Text, Text> {
 
+    int counter;
+
     public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-        System.out.println("key:"+key+", values:"+values);
 
         int sum = 0;
-        for(Text docId: values){
+        for(Text s: values){
             sum++;
         }
-        context.write(key,new Text(""+sum));
+        context.write(key,new Text(String.valueOf(sum)));
+        counter++;
+        System.out.println("Counter ="+counter);
     }
 }

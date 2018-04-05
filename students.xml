@@ -1,0 +1,18 @@
+<students>
+    <student>
+        <name>Raman</name>
+        <age>34</age>
+    </student>
+    <student>
+        <name>Krish</name>
+        <age>24</age>
+    </student>
+    <student>
+        <name>Raj</name>
+        <age>23</age>
+    </student>
+    <student>
+        <name>sita</name>
+        <age>30</age>
+    </student>
+</students>
