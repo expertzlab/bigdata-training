@@ -18,7 +18,15 @@
 
 <configuration>
 <property>
-<name>fs.default.name</name>
-<value>hdfs://localhost:9000</value>
+<name>dfs.replication</name>
+<value>1</value>
+</property>
+<property>
+<name>dfs.name.dir</name>
+<value>file:///Volumes/Data/workspace/works/hdfs/namenode</value>
+</property>
+<property>
+<name>dfs.data.dir</name>
+<value>file:///Volumes/Data/workspace/works/hdfs/datanode</value>
 </property>
 </configuration>

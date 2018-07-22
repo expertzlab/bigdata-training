@@ -1,4 +1,4 @@
-package com.epertzlab.json;
+package com.expertzlab.json;
 
 import com.expertzlab.json.JsonInputFormat;
 import org.apache.hadoop.io.MapWritable;

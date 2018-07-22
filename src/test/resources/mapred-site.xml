@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <!--
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,12 +13,23 @@
   See the License for the specific language governing permissions and
   limitations under the License. See accompanying LICENSE file.
 -->
-
-<!-- Put site-specific property overrides in this file. -->
-
 <configuration>
 <property>
-<name>fs.default.name</name>
-<value>hdfs://localhost:9000</value>
+<name>mapreduce.framework.name</name>
+<value>yarn</value>
+</property>
+<!--
+<property>
+<name>mapreduce.job.ubertask.enable</name>
+<value>true</value>
+</property>
+-->
+<property>
+<name>mapreduce.map.memory.mb</name>
+<value>200</value>
+</property>
+<property>
+<name>mapreduce.reduce.memory.mb</name>
+<value>200</value>
 </property>
 </configuration>
